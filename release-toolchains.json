@@ -1,0 +1,7 @@
+{
+  "node": "22.15.0",
+  "npm": "11.18.0",
+  "gemini": "0.63.0",
+  "runner": "ubuntu-24.04",
+  "installScripts": { "default": "deny: npm ci --ignore-scripts", "esbuild@0.28.2": "deny; the optional platform binary supports this build" }
+}

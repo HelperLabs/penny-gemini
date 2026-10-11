@@ -1,0 +1,7 @@
+{
+  "name": "penny-gemini",
+  "version": "0.1.0",
+  "description": "Penny memory for explicitly enabled Gemini CLI conversations. A HelperLabs product.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": { "MyPenny": { "httpUrl": "https://app.mypenny.ai/mcp" } }
+}

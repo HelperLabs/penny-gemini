@@ -1,0 +1,10 @@
+{
+  "packageVersion": "0.1.0",
+  "publisher": "HelperLabs",
+  "channel": "public",
+  "sourceCommit": "a4a58180a2b60c99ff93b7d241abdaa3a9585d5f",
+  "sourceDirty": false,
+  "canonicalSkillSha256": "978657f82166b88df353603c95e9613734a930a1fc5e75b3cdfe2361ea826aed",
+  "automaticPrivateMemoryAccess": false,
+  "targetBaseline": "Gemini CLI 0.63.0"
+}

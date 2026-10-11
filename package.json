@@ -1,0 +1,16 @@
+{
+  "name": "penny-gemini",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Penny memory for explicitly enabled Gemini CLI conversations",
+  "author": "HelperLabs",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/HelperLabs/penny-gemini.git" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "verify:host": "node scripts/verify-host.mjs",
+    "security:manifest": "node scripts/dependency-manifest.mjs"
+  },
+  "devDependencies": { "esbuild": "0.28.2" }
+}
