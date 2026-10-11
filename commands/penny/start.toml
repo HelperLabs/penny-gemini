@@ -1,0 +1,9 @@
+description = "Enable Penny for this private foreground conversation."
+prompt = """
+I explicitly request Penny for this conversation. Before any private-memory
+read or save, confirm that this is a private, human-directed foreground
+conversation and that I own the authenticated Penny account; ask if unclear.
+Read the MyPenny skill and use penny_session_start once for this conversation.
+Use the normal MCP tools, preserve host approvals, and save useful decisions
+during the task. Do not delegate private memory to subagents.
+"""
