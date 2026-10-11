@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFileSync,writeFileSync,realpathSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+const run=(name,args)=>execFileSync(name,args,{encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
+assert.equal(realpathSync(run('git',['rev-parse','--show-toplevel'])),realpathSync(process.cwd()));
+assert.equal(run('git',['status','--porcelain','--untracked-files=all']),'','Release inputs must be committed and clean');
+const pins=JSON.parse(readFileSync('release-toolchains.json','utf8'));
+assert.equal(process.versions.node,pins.node);
+assert.equal(run('npm',['--version']),pins.npm);
+const pkg=JSON.parse(readFileSync('package.json','utf8'));
+assert.equal(pkg.repository.url,'https://github.com/HelperLabs/penny-gemini.git');
+const extension=JSON.parse(readFileSync('gemini-extension.json','utf8'));
+assert.equal(extension.version,pkg.version);
+const lock=JSON.parse(readFileSync('package-lock.json','utf8'));
+const dependencies=Object.entries(lock.packages).filter(([p])=>p).map(([path,p])=>{
+  assert(/^\d+\.\d+\.\d+$/.test(p.version),'Dependencies must be exact versions');
+  assert(p.integrity && p.resolved?.startsWith('https://registry.npmjs.org/'),'Registry integrity required');
+  return {path,version:p.version,integrity:p.integrity,buildOnly:Boolean(p.dev)};
+});
+const tree=JSON.parse(run('npm',['ls','--all','--json']));
+const validate=p=>{assert(!p.extraneous&&!p.invalid&&!p.missing&&!p.problems?.length,'Installed dependency tree must match its lock');for(const child of Object.values(p.dependencies??{}))validate(child);};
+validate(tree);
+const files=run('git',['ls-files']).split('\n');
+const inputs=Object.fromEntries(files.map(file=>[file,createHash('sha256').update(readFileSync(file)).digest('hex')]));
+const proof={schemaVersion:1,package:{name:extension.name,version:extension.version,publisher:'HelperLabs',repository:pkg.repository.url},release:{ref:`v${extension.version}`,commit:run('git',['rev-parse','HEAD'])},toolchains:{node:pins.node,npm:pins.npm,gemini:pins.gemini},runtimeDependencies:[],buildDependencies:dependencies,inputs};
+writeFileSync(process.argv[2]??'release-dependencies.json',JSON.stringify(proof,null,2)+'\n');
+console.log(JSON.stringify({commit:proof.release.commit,dependencyCount:dependencies.length,runtimeDependencyCount:0}));
