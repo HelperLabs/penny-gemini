@@ -1,0 +1,64 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "name": "penny-SessionStart",
+            "type": "command",
+            "command": "node \"${extensionPath}/scripts/gemini_hook.mjs\" --event SessionStart",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "name": "penny-BeforeAgent",
+            "type": "command",
+            "command": "node \"${extensionPath}/scripts/gemini_hook.mjs\" --event BeforeAgent",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "name": "penny-AfterAgent",
+            "type": "command",
+            "command": "node \"${extensionPath}/scripts/gemini_hook.mjs\" --event AfterAgent",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "PreCompress": [
+      {
+        "hooks": [
+          {
+            "name": "penny-PreCompress",
+            "type": "command",
+            "command": "node \"${extensionPath}/scripts/gemini_hook.mjs\" --event PreCompress",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "name": "penny-SessionEnd",
+            "type": "command",
+            "command": "node \"${extensionPath}/scripts/gemini_hook.mjs\" --event SessionEnd",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  }
+}
